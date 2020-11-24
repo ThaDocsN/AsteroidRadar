@@ -3,7 +3,6 @@ package com.udacity.asteroidradar.main
 import android.app.Application
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
@@ -11,8 +10,7 @@ import kotlinx.coroutines.launch
 class MainViewModel(app: Application) : ViewModel() {
 
     private val database = getDatabase(app)
-    private val repo     = AsteroidRepository(database)
-
+    private val repo = AsteroidRepository(database)
 
 
     private var _selectedAsteroid = MutableLiveData<Asteroid>()
@@ -26,18 +24,18 @@ class MainViewModel(app: Application) : ViewModel() {
     }
 
     val asteroidsList = repo.asteroids
-    val picOfDay      = repo.pictureOfDay
+    val picOfDay = repo.pictureOfDay
 
     fun onAsteroidClicked(asteroid: Asteroid) {
 
         _selectedAsteroid.value = asteroid
     }
 
-    fun onComplete(){
+    fun onComplete() {
         _selectedAsteroid.value = null
     }
 
-    fun clickedFilter(filter: AsteroidRepository.Filter){
+    fun clickedFilter(filter: AsteroidRepository.Filter) {
         repo.applyFilter(filter)
     }
 

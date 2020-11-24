@@ -38,9 +38,9 @@ class MainFragment : Fragment() {
 
         binding.asteroidRecycler.adapter = adapter
 
-        viewModel.selectedAsteroid.observe(viewLifecycleOwner,{
+        viewModel.selectedAsteroid.observe(viewLifecycleOwner) {
             findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
-        })
+        }
 
         return binding.root
     }
