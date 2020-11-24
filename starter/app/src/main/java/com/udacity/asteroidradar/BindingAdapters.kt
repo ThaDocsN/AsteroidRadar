@@ -3,7 +3,24 @@ package com.udacity.asteroidradar
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import com.udacity.asteroidradar.main.AsteroidAdapter
 
+@BindingAdapter("adapterList")
+fun bindListAdapter(recyclerView: RecyclerView, dataList:List<Asteroid>?){
+    val adapter = recyclerView.adapter as AsteroidAdapter
+    adapter.submitList(dataList)
+}
+
+@BindingAdapter("picOfDay")
+fun bindPicOfDay(imageView: ImageView, url:String?){
+    url?.let {
+        Picasso.with(imageView.context)
+            .load(url)
+            .into(imageView)
+    }
+}
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
     if (isHazardous) {

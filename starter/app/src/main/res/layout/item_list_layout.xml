@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="asteroid"
+            type="com.udacity.asteroidradar.Asteroid" />
+        <variable
+            name="asteroidClickListener"
+            type="com.udacity.asteroidradar.main.AsteroidListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:onClick="@{() -> asteroidClickListener.onClick(asteroid)}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="1dp"
+            android:contentDescription="@string/image_of_asteroid"
+            app:statusIcon="@{asteroid.potentiallyHazardous}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_list_item_absolute_magnitude"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(asteroid.absoluteMagnitude)}"
+            android:textAlignment="viewStart"
+            android:contentDescription="@{String.valueOf(asteroid.absoluteMagnitude)}"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toStartOf="@+id/iv_list_item"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_list_item" />
+
+        <TextView
+            android:id="@+id/tv_list_item_estimated_diameter_max"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(asteroid.estimatedDiameter)}"
+            android:contentDescription="@{String.valueOf(asteroid.estimatedDiameter)}"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_list_item"
+            app:layout_constraintEnd_toStartOf="@+id/iv_list_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_list_item_absolute_magnitude" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
