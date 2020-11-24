@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 class AsteroidApplication: Application() {
 
-    val applicationScope = CoroutineScope(Dispatchers.Default)
+    private val applicationScope = CoroutineScope(Dispatchers.Default)
 
     override fun onCreate() {
         Timber.plant(Timber.DebugTree())

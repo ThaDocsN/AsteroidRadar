@@ -35,12 +35,13 @@ object Network {
         .build()
 
     // TODO move logging before I submit project
-    private val interceptor:HttpLoggingInterceptor = HttpLoggingInterceptor()
+    private val logInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
         .setLevel(HttpLoggingInterceptor.Level.BASIC)
 
-    val okHttpClient: OkHttpClient = OkHttpClient().newBuilder()
 
-        .addInterceptor(interceptor)
+    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder()
+
+        .addInterceptor(logInterceptor)
         .connectTimeout(120, TimeUnit.SECONDS)
         .readTimeout(120, TimeUnit.SECONDS)
         .writeTimeout(120, TimeUnit.SECONDS)

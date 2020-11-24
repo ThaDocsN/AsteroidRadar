@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
@@ -38,11 +38,10 @@ class MainFragment : Fragment() {
 
         binding.asteroidRecycler.adapter = adapter
 
+        @Suppress("COMPATIBILITY_WARNING")
         viewModel.selectedAsteroid.observe(viewLifecycleOwner) {
-            if (it != null){
-                findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
-                viewModel.onComplete()
-            }
+            findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+            viewModel.onComplete()
         }
 
         return binding.root
