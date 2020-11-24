@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.PictureOfDay
+import com.udacity.asteroidradar.api.API_KEY
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.asDatabaseModel
@@ -13,6 +15,8 @@ import com.udacity.asteroidradar.network.Network
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AsteroidRepository(private val database: AsteroidDatabase) {
@@ -21,9 +25,8 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         WEEK, TODAY, SAVED
     }
 
-    private lateinit var currentTime: Date
-
-    private lateinit var endDate: Date
+    private lateinit var currentDate: String
+    private lateinit var endDate: String
 
     private val _filter = MutableLiveData<Filter>(Filter.TODAY)
     private val filter: LiveData<Filter> = _filter
@@ -52,13 +55,15 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
 
     private fun getCurrentDate() {
         val calendar = Calendar.getInstance()
-        currentTime = calendar.time
+        val format  = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+        currentDate = format.format(calendar.time)
     }
 
     private fun getEndDate() {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, 7)
-        endDate = calendar.time
+        val format  = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+        endDate = format.format(calendar.time)
     }
 
     suspend fun updateAsteroidList() {
@@ -69,8 +74,9 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
 
             try {
                 val json =
-                    Network.service.getAsteroidList(currentTime.toString(), endDate.toString(), "")
-                val image = Network.service.getPicOfDay("")
+                    Network.service.getAsteroidList(currentDate.toString(), endDate.toString(), API_KEY)
+
+                val image = Network.service.getPicOfDay(API_KEY)
 
                 val list = parseAsteroidsJsonResult(JSONObject(json))
 

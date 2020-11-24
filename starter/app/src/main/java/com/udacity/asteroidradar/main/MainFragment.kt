@@ -39,7 +39,10 @@ class MainFragment : Fragment() {
         binding.asteroidRecycler.adapter = adapter
 
         viewModel.selectedAsteroid.observe(viewLifecycleOwner) {
-            findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+            if (it != null){
+                findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+                viewModel.onComplete()
+            }
         }
 
         return binding.root

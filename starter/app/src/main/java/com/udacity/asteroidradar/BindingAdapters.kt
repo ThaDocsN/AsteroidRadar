@@ -18,6 +18,8 @@ fun bindPicOfDay(imageView: ImageView, url: String?) {
     url?.let {
         Picasso.with(imageView.context)
             .load(url)
+            .placeholder(R.drawable.placeholder_picture_of_day)
+            .error(R.drawable.asteroid_hazardous)
             .into(imageView)
     }
 }
